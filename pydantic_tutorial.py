@@ -1,11 +1,12 @@
-from pydantic import BaseModel
-from typing import List, Dict, Optional
+from pydantic import BaseModel, Field, EmailStr, AnyUrl
+from typing import List, Dict, Optional, Annotated
 
 
 class Patient(BaseModel):  # Pydantic class
-    name: str
+    name: str = Field(max_length=50)
     age: int
-    weight: float
+    email: EmailStr
+    weight: float = Field(gt=0)
     married: Optional[bool] = None
     allergies: List[str]
     contact_details: Dict[str, str]
@@ -25,8 +26,8 @@ def update_patient_data(patient: Patient):
     print("Patient data updated successfully.")
 
 
-patient_info = {'name': 'Amartya', 'age': 26, 'weight': 68, 'allergies': [
-    'Pollen', 'Dust'], 'contact_details': {'e-mail': 'abc@gmail.com', 'phone': '123'}}
+patient_info = {'name': 'Amartya', 'age': 26, 'email': 'abcgmail.com', 'weight': 68, 'allergies': [
+    'Pollen', 'Dust'], 'contact_details': {'phone': '123'}}
 
 patient1 = Patient(**patient_info)
 
