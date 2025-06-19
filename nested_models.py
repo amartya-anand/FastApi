@@ -20,8 +20,9 @@ address1 = Address(**address_dict)
 
 patient_dict = {'name': 'Amartya', 'gender': 'M', 'address': address1}
 
-pateint1 = Patient(**patient_dict)
+patient1 = Patient(**patient_dict)
 
-print(pateint1)
-print(pateint1.address)
-print(pateint1.address.city)
+temp = patient1.model_dump()
+print(temp)
+# print(pateint1.address)
+print(type(temp))
