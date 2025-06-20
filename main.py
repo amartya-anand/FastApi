@@ -126,7 +126,7 @@ def update_patient(patient_id: str, patient_update: PatientUpdate):
         updated_patient_info = patient.update.model_dump(
             exclude_unset=True)  # Not all the values need to be updated
 
-        for key, value in updated_patient_info.items(): 
+        for key, value in updated_patient_info.items():
             existing_patient_info[key] = value
 
             existing_patient_info['id'] = patient_id
@@ -137,3 +137,18 @@ def update_patient(patient_id: str, patient_update: PatientUpdate):
 
             save_data(data)
             return JSONResponse(status_code=200, content={"message": "Patient updated successfully"})
+
+
+@app.delete('/delete/{patient_id}')
+def delete_patient(patient_id: str):
+
+    data = load_data()
+
+    if patient_id not in data:
+        raise HTTPException(status_code=404, detail="Patient not found")
+
+    del data[patient_id]
+
+    save_data(data)
+
+    return JSONResponse(status_code=200, content={"message": "Patient deleted successfully"})
